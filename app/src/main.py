@@ -8,10 +8,9 @@ LIMIT_VD1_MIN=100
 LIMIT_VD2_MAX=200
 LIMIT_VD2_MIN=100
 
-COLOR1="#00e8b2"
+COLOR1="#f3ae35"
+COLORR="#00e8b2"
 COLOR2="#222222"
-running = True  # Variable de control para indicar si la aplicación debe seguir ejecutándose
-
 
 async def main(page: ft.Page):
     async def button_exit(e):
@@ -27,7 +26,7 @@ async def main(page: ft.Page):
     
     page.window_height = 600   
     page.window_width = 600
-    # page.window_resizable = True
+    page.window_resizable = True
     # page.window_movable = True
     page.title = "PAYMENTS"
     page.window_title_bar_hidden = True
