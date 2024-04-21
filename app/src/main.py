@@ -1,5 +1,4 @@
 import flet as ft
-import sys as sis
 
 # VARIABLES
 LIMIT_VD1_MAX=200
@@ -67,7 +66,7 @@ async def main(page: ft.Page):
         border=ft.InputBorder.UNDERLINE,
         filled=True,
         bgcolor=COLOR1,
-        helper_text="Ingresa aqui la herramienta que deseas usar",
+        helper_text="Ingresa alli solo",
         # autocorrect=
         # helper_style=ft.ShadowBlurStyle.SOLID,
     )
