@@ -8,8 +8,9 @@ LIMIT_VD1_MIN=100
 LIMIT_VD2_MAX=200
 LIMIT_VD2_MIN=100
 
-COLOR1="#f3ae35"
+COLOR1="#385254"
 COLORR="#00e8b2"
+COLORQ="#f3ae35"
 COLOR2="#222222"
 
 async def main(page: ft.Page):
@@ -58,10 +59,32 @@ async def main(page: ft.Page):
     async def show_draggable_cursor(e: ft.HoverEvent):
         e.control.mouse_cursor = ft.MouseCursor.RESIZE_LEFT_RIGHT
         await e.control.update_async()
+    # ---------- APPLICATION LAYOUT  ----------------------
+
+    inputSearch = ft.TextField(
+        # hint_text="SEARCH", 
+        # text_align=ft.TextAlign.CENTER,
+        border=ft.InputBorder.UNDERLINE,
+        filled=True,
+        bgcolor=COLOR1,
+        helper_text="Ingresa aqui la herramienta que deseas usar",
+        # autocorrect=
+        # helper_style=ft.ShadowBlurStyle.SOLID,
+    )
+
+    colu=ft.Column(
+        controls=[inputSearch],
+        animate_offset=ft.Animation.curve,
+
+    )
 
     left01 = ft.Container(
+        colu,
         bgcolor=COLOR1,
-        alignment=ft.alignment.center,
+        # border=ft.border.all(1,"#f6f8fa"),
+        border=ft.border.only(bottom=ft.BorderSide(1,"green")),
+        alignment=ft.alignment.center_right,
+        border_radius=3,
         width=100,
     )
     left02 = ft.Container(
@@ -73,6 +96,13 @@ async def main(page: ft.Page):
         bgcolor= COLOR1,
         alignment=ft.alignment.center,
         expand=1,
+        shadow=ft.BoxShadow(
+            # spread_radius=1,
+            # blur_radius=15,
+            # color=ft.colors.BLUE_GREY_300,
+            offset=ft.Offset(0, 1),
+            blur_style=ft.ShadowBlurStyle.OUTER,
+        ),
     )
 
     gestureDetector1 = ft.GestureDetector(
@@ -89,7 +119,7 @@ async def main(page: ft.Page):
         on_hover=show_draggable_cursor,
     )
 
-    row = ft.Row(spacing=10, controls=[
+    row = ft.Row(controls=[
         left01,
         gestureDetector1,
         left02,
@@ -99,9 +129,9 @@ async def main(page: ft.Page):
 
     container = ft.Container(row,
                               width=1920, 
-                              height=1080 ,
+                              height=1080,
                               bgcolor=COLOR1, 
-                              alignment=ft.alignment.bottom_center)
+                              alignment=ft.alignment.center)
     await page.add_async(container)
     pass
 # ft.app(port=3000,target=main,assets_dir="assets", view=ft.AppView.WEB_BROWSER)
