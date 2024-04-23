@@ -39,11 +39,22 @@ async def main(page: ft.Page):
         center_title=False,
         bgcolor=COLOR1,
         actions=[
-            ft.IconButton(ft.icons.MAXIMIZE_ROUNDED, icon_color=COLOR2, on_click=button_maximize),
             ft.IconButton(ft.icons.MINIMIZE_SHARP, icon_color=COLOR2, on_click=button_minimize),
+            ft.IconButton(ft.icons.MAXIMIZE_ROUNDED, icon_color=COLOR2, on_click=button_maximize),
             ft.IconButton(ft.icons.EXIT_TO_APP, icon_color=COLOR2, on_click=button_exit),
         ],
     )
+    # Agrega un WindowDragArea en tu AppBar para permitir mover la ventana
+    # page.appbar.add(
+    #     ft.WindowDragArea(
+    #         ft.Container(
+    #             ft.Text("Drag this area to move, maximize and restore application window."),
+    #             bgcolor=ft.colors.AMBER_300,
+    #             padding=10
+    #         ),
+    #         expand=True
+    #     )
+    # )
 
     async def move_vertical_divider1(e: ft.DragUpdateEvent):
         if (e.delta_x > 0 and left01.width < LIMIT_VD1_MAX) or (e.delta_x < 0 and left01.width > LIMIT_VD1_MIN):
@@ -67,6 +78,8 @@ async def main(page: ft.Page):
         filled=True,
         bgcolor=COLOR1,
         helper_text="Ingresa alli solo",
+        helper_style=ft.TextStyle(color=COLORQ),
+        height=56,
         # autocorrect=
         # helper_style=ft.ShadowBlurStyle.SOLID,
     )
@@ -81,7 +94,7 @@ async def main(page: ft.Page):
         colu,
         bgcolor=COLOR1,
         # border=ft.border.all(1,"#f6f8fa"),
-        border=ft.border.only(bottom=ft.BorderSide(1,"green")),
+        border=ft.border.only(left=ft.BorderSide(1,"green")),
         alignment=ft.alignment.center_right,
         border_radius=3,
         width=100,
@@ -94,14 +107,7 @@ async def main(page: ft.Page):
     right01 = ft.Container(
         bgcolor= COLOR1,
         alignment=ft.alignment.center,
-        expand=1,
-        shadow=ft.BoxShadow(
-            # spread_radius=1,
-            # blur_radius=15,
-            # color=ft.colors.BLUE_GREY_300,
-            offset=ft.Offset(0, 1),
-            blur_style=ft.ShadowBlurStyle.OUTER,
-        ),
+        expand=True,
     )
 
     gestureDetector1 = ft.GestureDetector(
@@ -118,19 +124,23 @@ async def main(page: ft.Page):
         on_hover=show_draggable_cursor,
     )
 
-    row = ft.Row(controls=[
+    row = ft.Row(
+        expand=True,
+        controls=[
         left01,
         gestureDetector1,
         left02,
         gestureDetector2,
         right01,
-    ])
+        ]
+    )
 
     container = ft.Container(row,
                               width=1920, 
                               height=1080,
-                              bgcolor=COLOR1, 
-                              alignment=ft.alignment.center)
+                              bgcolor=COLOR1,
+                              expand=True,
+                            )
     await page.add_async(container)
     pass
 # ft.app(port=3000,target=main,assets_dir="assets", view=ft.AppView.WEB_BROWSER)

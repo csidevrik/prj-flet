@@ -1,47 +1,46 @@
 import flet as ft
 
-def main(page):
+class MyApp(ft.FletApp):
+    def build(self):
+        # Crear la AppBar
+        appbar = ft.AppBar(title="Mi AppBar")
+        
+        # Crear un GestureDetector para detectar eventos de mouse
+        gesture_detector = ft.GestureDetector(
+            on_tap_down=self.on_tap_down,
+            on_tap_up=self.on_tap_up,
+            on_double_tap=self.on_double_tap,
+            on_long_press=self.on_long_press,
+            on_pan_start=self.on_pan_start,
+            on_pan_update=self.on_pan_update,
+            on_pan_end=self.on_pan_end,
+        )
+        
+        # Añadir el GestureDetector a la AppBar
+        appbar.add_widget(gesture_detector)
+        
+        return appbar
 
-    def close_anchor(e):
-        text = f"Color {e.control.data}"
-        print(f"closing view from {text}")
-        anchor.close_view(text)
+    def on_tap_down(self, event):
+        print("Tap down:", event)
 
-    def handle_change(e):
-        print(f"handle_change e.data: {e.data}")
+    def on_tap_up(self, event):
+        print("Tap up:", event)
 
-    def handle_submit(e):
-        print(f"handle_submit e.data: {e.data}")
+    def on_double_tap(self, event):
+        print("Double tap:", event)
 
-    def handle_tap(e):
-        print(f"handle_tap")
+    def on_long_press(self, event):
+        print("Long press:", event)
 
-    anchor = ft.SearchBar(
-        view_elevation=4,
-        divider_color=ft.colors.AMBER,
-        bar_hint_text="Search colors...",
-        view_hint_text="Choose a color from the suggestions...",
-        on_change=handle_change,
-        on_submit=handle_submit,
-        on_tap=handle_tap,
-        controls=[
-            ft.ListTile(title=ft.Text(f"Color {i}"), on_click=close_anchor, data=i)
-            for i in range(10)
-        ],
-    )
+    def on_pan_start(self, event):
+        print("Pan start:", event)
 
-    page.add(
-        ft.Row(
-            alignment=ft.MainAxisAlignment.CENTER,
-            controls=[
-                ft.OutlinedButton(
-                    "Open Search View",
-                    on_click=lambda _: anchor.open_view(),
-                ),
-            ],
-        ),
-        anchor,
-    )
+    def on_pan_update(self, event):
+        print("Pan update:", event)
 
+    def on_pan_end(self, event):
+        print("Pan end:", event)
 
-ft.app(target=main)
+if __name__ == '__main__':
+    MyApp.run()
