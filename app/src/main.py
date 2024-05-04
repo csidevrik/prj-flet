@@ -7,10 +7,17 @@ LIMIT_VD1_MIN=100
 LIMIT_VD2_MAX=200
 LIMIT_VD2_MIN=100
 
-COLOR1="#385254"
+COLOR1="#009485"
 COLORR="#00e8b2"
 COLORQ="#f3ae35"
 COLOR2="#222222"
+
+GRCOLOR1="#009485"
+GRCOLOR2="#1f1f1f"
+
+GRADIENT=ft.LinearGradient([
+    GRCOLOR2,GRCOLOR1
+])
 
 async def main(page: ft.Page):
     async def button_exit(e):
@@ -92,7 +99,8 @@ async def main(page: ft.Page):
 
     left01 = ft.Container(
         colu,
-        bgcolor=COLOR1,
+        # bgcolor=COLOR1,
+        gradient=GRADIENT,
         # border=ft.border.all(1,"#f6f8fa"),
         border=ft.border.only(left=ft.BorderSide(1,"green")),
         alignment=ft.alignment.center_right,
