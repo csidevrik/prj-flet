@@ -9,7 +9,9 @@ class UI(ft.UserControl):
     GRCOLOR5="#23c4ac"
 
 
-    GRADIENT=ft.LinearGradient([
+    GRADIENT=ft.LinearGradient(
+        begin=
+        [
     GRCOLOR5,GRCOLOR4,GRCOLOR3,GRCOLOR2,GRCOLOR1
     ])
 
@@ -60,7 +62,6 @@ class UI(ft.UserControl):
             col = 1,
             bgcolor = self.color_teal,
             border_radius=5,
-            gradient=self.GRADIENT,
             content=ft.Column(
                 controls=[
                     ft.Container(
@@ -138,6 +139,7 @@ class UI(ft.UserControl):
         self.frame3 = ft.Container(
             col = 5,
             bgcolor = self.color_teal,
+            gradient=self.GRADIENT,
             content=ft.Column(
                 
             )

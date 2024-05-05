@@ -19,9 +19,12 @@ GRCOLOR4="#5cc0be"
 GRCOLOR5="#23c4ac"
 
 
-GRADIENT=ft.LinearGradient([
-    GRCOLOR5,GRCOLOR4,GRCOLOR3,GRCOLOR2,GRCOLOR1
-])
+GRADIENT=ft.LinearGradient(
+    begin=ft.alignment.top_left,
+    end=ft.Alignment(0.8,1),
+    colors=[
+        GRCOLOR5,GRCOLOR4,GRCOLOR3,GRCOLOR2,GRCOLOR1
+    ])
 
 async def main(page: ft.Page):
     async def button_exit(e):
@@ -43,9 +46,10 @@ async def main(page: ft.Page):
     page.window_title_bar_hidden = True
     page.window_title_bar_buttons_hidden = True
     page.padding = 0
+    page.background_color = GRADIENT
     page.appbar = ft.AppBar(
-        leading=ft.Icon(ft.icons.WIFI),
-        leading_width=10,
+        leading=ft.Icon(ft.icons.WEB),
+        # leading_width=10,
         title=ft.Text("PAYMENTS"),
         center_title=False,
         bgcolor=COLOR1,
@@ -55,17 +59,6 @@ async def main(page: ft.Page):
             ft.IconButton(ft.icons.EXIT_TO_APP, icon_color=COLOR2, on_click=button_exit),
         ],
     )
-    # Agrega un WindowDragArea en tu AppBar para permitir mover la ventana
-    # page.appbar.add(
-    #     ft.WindowDragArea(
-    #         ft.Container(
-    #             ft.Text("Drag this area to move, maximize and restore application window."),
-    #             bgcolor=ft.colors.AMBER_300,
-    #             padding=10
-    #         ),
-    #         expand=True
-    #     )
-    # )
 
     async def move_vertical_divider1(e: ft.DragUpdateEvent):
         if (e.delta_x > 0 and left01.width < LIMIT_VD1_MAX) or (e.delta_x < 0 and left01.width > LIMIT_VD1_MIN):
@@ -88,9 +81,8 @@ async def main(page: ft.Page):
         border=ft.InputBorder.UNDERLINE,
         filled=True,
         bgcolor=COLOR1,
-        helper_text="Ingresa alli solo",
-        helper_style=ft.TextStyle(color=COLORQ),
-        height=56,
+        # helper_text="Ingresa alli solo",
+        # helper_style=ft.TextStyle(color=COLORR),
         # autocorrect=
         # helper_style=ft.ShadowBlurStyle.SOLID,
     )
@@ -103,8 +95,8 @@ async def main(page: ft.Page):
 
     left01 = ft.Container(
         colu,
-        # bgcolor=COLOR1,
-        gradient=GRADIENT,
+        bgcolor=COLOR1,
+        # gradient=GRADIENT,
         # border=ft.border.all(1,"#f6f8fa"),
         border=ft.border.only(left=ft.BorderSide(1,"green")),
         alignment=ft.alignment.center_right,
@@ -151,7 +143,6 @@ async def main(page: ft.Page):
                               width=1920, 
                               height=1080,
                               bgcolor=COLOR1,
-                              gradient=GRADIENT,
                               expand=True,
                             )
     await page.add_async(container)
