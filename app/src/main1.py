@@ -2,6 +2,17 @@ import flet as ft
 
 
 class UI(ft.UserControl):
+    GRCOLOR1="#0c132c"
+    GRCOLOR2="#1c2541"
+    GRCOLOR3="#3a516b"
+    GRCOLOR4="#5cc0be"
+    GRCOLOR5="#23c4ac"
+
+
+    GRADIENT=ft.LinearGradient([
+    GRCOLOR5,GRCOLOR4,GRCOLOR3,GRCOLOR2,GRCOLOR1
+    ])
+
     def __init__(self, page):
         super().__init__(expand= True)
         self.COLOR_0="#019689"
@@ -49,6 +60,7 @@ class UI(ft.UserControl):
             col = 1,
             bgcolor = self.color_teal,
             border_radius=5,
+            gradient=self.GRADIENT,
             content=ft.Column(
                 controls=[
                     ft.Container(

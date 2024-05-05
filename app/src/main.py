@@ -12,11 +12,15 @@ COLORR="#00e8b2"
 COLORQ="#f3ae35"
 COLOR2="#222222"
 
-GRCOLOR1="#009485"
-GRCOLOR2="#1f1f1f"
+GRCOLOR1="#0c132c"
+GRCOLOR2="#1c2541"
+GRCOLOR3="#3a516b"
+GRCOLOR4="#5cc0be"
+GRCOLOR5="#23c4ac"
+
 
 GRADIENT=ft.LinearGradient([
-    GRCOLOR2,GRCOLOR1
+    GRCOLOR5,GRCOLOR4,GRCOLOR3,GRCOLOR2,GRCOLOR1
 ])
 
 async def main(page: ft.Page):
@@ -147,6 +151,7 @@ async def main(page: ft.Page):
                               width=1920, 
                               height=1080,
                               bgcolor=COLOR1,
+                              gradient=GRADIENT,
                               expand=True,
                             )
     await page.add_async(container)
