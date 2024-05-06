@@ -1,20 +1,37 @@
 import flet as ft
-
+import math
 
 class UI(ft.UserControl):
+    # PALETA-01-5 COLORES
     GRCOLOR1="#0c132c"
     GRCOLOR2="#1c2541"
     GRCOLOR3="#3a516b"
     GRCOLOR4="#5cc0be"
     GRCOLOR5="#23c4ac"
+    # PALETA-02-2 COLORES
+    GRCOLOR6="#11998e"
+    GRCOLOR7="#38ef7d"
+    
+    color_paleta1 = [
+        GRCOLOR1,GRCOLOR2,GRCOLOR3,GRCOLOR4,GRCOLOR5
+    ]
+    color_paleta2 = [
+        GRCOLOR6,GRCOLOR7
+    ]
+
+
+
+
 
 
     GRADIENT=ft.LinearGradient(
-        begin=
-        [
-    GRCOLOR5,GRCOLOR4,GRCOLOR3,GRCOLOR2,GRCOLOR1
-    ])
-
+        begin=ft.alignment.bottom_left,
+        end=ft.Alignment(0.8, 1),
+        colors=color_paleta2,
+        # tile_mode=ft.GradientTileMode.MIRROR,
+        rotation=math.pi / 3,
+    )
+    
     def __init__(self, page):
         super().__init__(expand= True)
         self.COLOR_0="#019689"
