@@ -1,4 +1,6 @@
+import math
 import flet as ft
+from lib.gradients import gradient
 
 # VARIABLES
 LIMIT_VD1_MAX=200
@@ -12,19 +14,12 @@ COLORR="#00e8b2"
 COLORQ="#f3ae35"
 COLOR2="#222222"
 
-GRCOLOR1="#0c132c"
-GRCOLOR2="#1c2541"
-GRCOLOR3="#3a516b"
-GRCOLOR4="#5cc0be"
-GRCOLOR5="#23c4ac"
-
-
 GRADIENT=ft.LinearGradient(
     begin=ft.alignment.top_left,
     end=ft.Alignment(0.8,1),
-    colors=[
-        GRCOLOR5,GRCOLOR4,GRCOLOR3,GRCOLOR2,GRCOLOR1
-    ])
+    colors = gradient.getGradient("Pun Yeta"),
+    rotation=math.pi/4.6,
+)
 
 async def main(page: ft.Page):
     async def button_exit(e):
@@ -46,13 +41,14 @@ async def main(page: ft.Page):
     page.window_title_bar_hidden = True
     page.window_title_bar_buttons_hidden = True
     page.padding = 0
-    page.background_color = GRADIENT
+    # page.background_color = GRADIENT
     page.appbar = ft.AppBar(
         leading=ft.Icon(ft.icons.WEB),
         # leading_width=10,
         title=ft.Text("PAYMENTS"),
         center_title=False,
         bgcolor=COLOR1,
+        # gradient = GRADIENT,
         actions=[
             ft.IconButton(ft.icons.MINIMIZE_SHARP, icon_color=COLOR2, on_click=button_minimize),
             ft.IconButton(ft.icons.MAXIMIZE_ROUNDED, icon_color=COLOR2, on_click=button_maximize),
@@ -96,7 +92,7 @@ async def main(page: ft.Page):
     left01 = ft.Container(
         colu,
         bgcolor=COLOR1,
-        # gradient=GRADIENT,
+        gradient=GRADIENT,
         # border=ft.border.all(1,"#f6f8fa"),
         border=ft.border.only(left=ft.BorderSide(1,"green")),
         alignment=ft.alignment.center_right,
