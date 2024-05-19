@@ -1,6 +1,6 @@
 import math
 import flet as ft
-from lib.gradients import gradient
+from li.gradients import gradient
 
 # VARIABLES
 LIMIT_VD1_MAX=200
@@ -17,7 +17,7 @@ COLOR2="#222222"
 GRADIENT=ft.LinearGradient(
     begin=ft.alignment.top_left,
     end=ft.Alignment(0.8,1),
-    colors = gradient.getGradient("Pun Yeta"),
+    colors = gradient("Pun Yeta"),
     rotation=math.pi/4.6,
 )
 
