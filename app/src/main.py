@@ -17,7 +17,7 @@ COLOR2="#222222"
 GRADIENT=ft.LinearGradient(
     begin=ft.alignment.top_left,
     end=ft.Alignment(0.8,1),
-    colors = gradient("Pun Yeta"),
+    colors = gradient("Kye Meh"),
     rotation=math.pi/4.6,
 )
 
