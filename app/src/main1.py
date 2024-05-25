@@ -1,184 +1,147 @@
-import flet as ft
 import math
+import flet as ft
+from li.gradients import gradient
 
-class UI(ft.UserControl):
-    # PALETA-01-5 COLORES
-    GRCOLOR1="#0c132c"
-    GRCOLOR2="#1c2541"
-    GRCOLOR3="#3a516b"
-    GRCOLOR4="#5cc0be"
-    GRCOLOR5="#23c4ac"
-    # PALETA-02-2 COLORES
-    GRCOLOR6="#11998e"
-    GRCOLOR7="#38ef7d"
+# VARIABLES
+LIMIT_VD1_MAX=200
+LIMIT_VD1_MIN=100
+
+LIMIT_VD2_MAX=200
+LIMIT_VD2_MIN=100
+
+COLOR1="#18684d"
+COLORR="#00e8b2"
+COLORQ="#f3ae35"
+COLOR2="#222222"
+
+GRADIENT=ft.LinearGradient(
+    begin=ft.alignment.bottom_center,
+    end=ft.Alignment(0.8,1),
+    colors = gradient("Quepal"),
+    rotation=math.pi/4.6,
+)
+
+async def main(page: ft.Page):
+    async def button_exit(e):
+        await page.window_destroy_async()
+        await page.update_async()
+    async def button_maximize(e):
+        page.window_height = 1080
+        page.window_width = 1920
+        await page.update_async()
+    async def button_minimize(e):
+        page.window_minimized=True
+        await page.update_async()
     
-    color_paleta1 = [
-        GRCOLOR1,GRCOLOR2,GRCOLOR3,GRCOLOR4,GRCOLOR5
-    ]
-    color_paleta2 = [
-        GRCOLOR6,GRCOLOR7
-    ]
-
-
-
-
-
-
-    GRADIENT=ft.LinearGradient(
-        begin=ft.alignment.bottom_left,
-        end=ft.Alignment(0.8, 1),
-        colors=color_paleta2,
-        # tile_mode=ft.GradientTileMode.MIRROR,
-        rotation=math.pi / 3,
+    page.window_height = 600   
+    page.window_width = 600
+    page.window_resizable = True
+    # page.window_movable = True
+    page.title = "PAYMENTS"
+    page.window_title_bar_hidden = True
+    page.window_title_bar_buttons_hidden = True
+    page.padding = 0
+    # page.background_color = GRADIENT
+    page.appbar = ft.AppBar(
+        leading=ft.Icon(ft.icons.WEB),
+        # leading_width=10,
+        title=ft.Text("PAYMENTS"),
+        center_title=False,
+        bgcolor=COLOR1,
+        # gradient = GRADIENT,
+        actions=[
+            ft.IconButton(ft.icons.MINIMIZE_SHARP, icon_color=COLOR2, on_click=button_minimize),
+            ft.IconButton(ft.icons.MAXIMIZE_ROUNDED, icon_color=COLOR2, on_click=button_maximize),
+            ft.IconButton(ft.icons.EXIT_TO_APP, icon_color=COLOR2, on_click=button_exit),
+        ],
     )
-    
-    def __init__(self, page):
-        super().__init__(expand= True)
-        self.COLOR_0="#019689"
-        self.COLOR_1="#00a3c2"
 
-        self.color_teal = self.COLOR_1
+    async def move_vertical_divider1(e: ft.DragUpdateEvent):
+        if (e.delta_x > 0 and left01.width < LIMIT_VD1_MAX) or (e.delta_x < 0 and left01.width > LIMIT_VD1_MIN):
+            left01.width += e.delta_x
+        await left01.update_async()
 
-        self.mode_switch = ft.Switch(
-            value=True,
-            thumb_color = "black",
-        )
+    async def move_vertical_divider2(e: ft.DragUpdateEvent):
+        if (e.delta_x > 0 and left02.width < LIMIT_VD2_MAX) or (e.delta_x < 0 and left02.width > LIMIT_VD2_MIN):
+            left02.width += e.delta_x
+        await left02.update_async()
 
-        self.initial_container_1 = ft.Container(
-            bgcolor= self.color_teal,
-            border_radius=20,
-            padding=20,
-            content=ft.Column(
-                controls=[
-                    ft.Text("Dia"),
-                    ft.Container(
-                        border_radius=20, 
-                    )
-                ]
-            )
-        )
-        
-        self.initial_container_2 = ft.Container(
-            bgcolor= self.color_teal,
-            border_radius=20,
-            padding=20,
-            content=ft.Column(
-                controls=[
-                    ft.Text("Noche"),
-                    ft.Container(
-                        border_radius=20, 
-                    )
-                ]
-            )
-        )
+    async def show_draggable_cursor(e: ft.HoverEvent):
+        e.control.mouse_cursor = ft.MouseCursor.RESIZE_LEFT_RIGHT
+        await e.control.update_async()
+    # ---------- APPLICATION LAYOUT  ----------------------
 
-        self.container_1 = ft.Container(content=self.initial_container_1)
-        self.container_2 = ft.Container(content=self.initial_container_2)
+    inputSearch = ft.TextField(
+        hint_text="SEARCH", 
+        text_align=ft.TextAlign.CENTER,
+        border=ft.InputBorder.UNDERLINE,
+        # filled=True,
+        # bgcolor=COLOR1,
+        # helper_text="Ingresa alli solo",
+        helper_style=ft.TextStyle(color=COLORR),
+        # autocorrect=
+        # helper_style=ft.ShadowBlurStyle.SOLID,
+    )
 
-        self.navigation_container = ft.Container(
-            col = 1,
-            bgcolor = self.color_teal,
-            border_radius=5,
-            content=ft.Column(
-                controls=[
-                    ft.Container(
-                        expand=True,
-                        content=ft.NavigationRail(
-                            bgcolor=self.color_teal,
-                            expand=True,
-                            selected_index=0,
-                            destinations=[
-                                ft.NavigationDestination(
-                                    icon=ft.icons.HOME,
-                                ),
-                                ft.NavigationDestination(
-                                    icon=ft.icons.LOCATION_ON_OUTLINED,
-                                ),
-                                ft.NavigationDestination(
-                                    icon=ft.icons.CALENDAR_MONTH_SHARP,
-                                ),
-                                ft.NavigationDestination(
-                                    icon=ft.icons.SETTINGS,
-                                ),
+    colu=ft.Column(
+        controls=[inputSearch],
+        animate_offset=ft.Animation.curve,
 
-                            ]
-                            
-                        )
-                    ),
-                    ft.Container(
-                        expand=True,
-                        alignment=ft.alignment.center,
-                        content=ft.Column(
-                            expand = True,
-                            alignment=ft.MainAxisAlignment.END,
-                            controls = [
-                                ft.IconButton(
-                                    icon=ft.icons.OUTPUT,
-                                ),
-                                self.mode_switch
-                            ]
-                        )                        
-                    )
-                ]
-            )
-        )
+    )
 
-        self.frame2 = ft.Container(
-            col = 6,
-            # bgcolor = self.color_teal,
-            content=ft.Column(
-                controls=[
-                    ft.Container(
-                        border_radius=7,
-                        padding=ft.padding.only(right=200),
-                        alignment=ft.alignment.top_left,
-                        content= ft.Container(
-                            bgcolor=self.color_teal,
-                            border_radius=20,
-                            content=ft.Row(
-                                controls=[
-                                    ft.IconButton(icon = ft.icons.SEARCH),
-                                    ft.TextField(
-                                        hint_text="Search for something",
-                                        border = ft.InputBorder.NONE,
-                                        border_radius=14)
-                                ]
+    left01 = ft.Container(
+        colu,
+        bgcolor=COLOR1,
+        gradient=GRADIENT,
+        # border=ft.border.all(1,"#f6f8fa"),
+        border=ft.border.only(left=ft.BorderSide(1,"green")),
+        alignment=ft.alignment.center_right,
+        border_radius=3,
+        width=100,
+    )
+    left02 = ft.Container(
+        bgcolor= COLOR1,
+        alignment=ft.alignment.center,
+        width=100,
+    )
+    right01 = ft.Container(
+        bgcolor= COLOR1,
+        alignment=ft.alignment.center,
+        expand=True,
+    )
+
+    gestureDetector1 = ft.GestureDetector(
+        content=ft.VerticalDivider(),
+        drag_interval=10,
+        on_pan_update=move_vertical_divider1,
+        on_hover=show_draggable_cursor,
+    )
+
+    gestureDetector2 = ft.GestureDetector(
+        content=ft.VerticalDivider(),
+        drag_interval=10,
+        on_pan_update=move_vertical_divider2,
+        on_hover=show_draggable_cursor,
+    )
+
+    row = ft.Row(
+        expand=True,
+        controls=[
+        left01,
+        gestureDetector1,
+        left02,
+        gestureDetector2,
+        right01,
+        ]
+    )
+
+    container = ft.Container(row,
+                              width=1920, 
+                              height=1080,
+                              bgcolor=COLOR1,
+                              expand=True,
                             )
-                        )
-                    ),
-                    self.container_1,
-                    self.container_2
-                ]
-
-            )
-        )
-
-        self.frame3 = ft.Container(
-            col = 5,
-            bgcolor = self.color_teal,
-            gradient=self.GRADIENT,
-            content=ft.Column(
-                
-            )
-        )
-
-
-        self.container = ft.ResponsiveRow(
-            controls=[
-                self.navigation_container,
-                self.frame2,
-                self.frame3
-            ]
-        )
-
-    def build(self):
-        return self.container
-
-def main(page: ft.Page):
-    page.window_min_height  = 820
-    page.window_min_width   = 530
-    page.theme = ft.Theme(font_family="Consolas")
-    page.theme_mode         = ft.ThemeMode.DARK
-    page.add(UI(page))
-
-ft.app(main)
+    await page.add_async(container)
+    pass
+# ft.app(port=3000,target=main,assets_dir="assets", view=ft.AppView.WEB_BROWSER)
+ft.app(target=main, assets_dir="assets") 
