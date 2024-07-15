@@ -38,8 +38,8 @@ async def main(page: ft.Page):
     page.window_resizable = True
     # page.window_movable = True
     page.title = "PAYMENTS"
-    page.window_title_bar_hidden = True
-    page.window_title_bar_buttons_hidden = True
+    # page.window_title_bar_hidden = True
+    # page.window_title_bar_buttons_hidden = True
     page.padding = 0
     # page.background_color = GRADIENT
     page.appbar = ft.AppBar(
@@ -48,7 +48,6 @@ async def main(page: ft.Page):
         title=ft.Text("PAYMENTS"),
         center_title=False,
         bgcolor=COLOR1,
-        # gradient = GRADIENT,
         actions=[
             ft.IconButton(ft.icons.MINIMIZE_SHARP, icon_color=COLOR2, on_click=button_minimize),
             ft.IconButton(ft.icons.MAXIMIZE_ROUNDED, icon_color=COLOR2, on_click=button_maximize),
@@ -72,8 +71,8 @@ async def main(page: ft.Page):
     # ---------- APPLICATION LAYOUT  ----------------------
 
     inputSearch = ft.TextField(
-        # hint_text="SEARCH", 
-        # text_align=ft.TextAlign.CENTER,
+        hint_text="SEARCH", 
+        text_align=ft.TextAlign.CENTER,
         border=ft.InputBorder.UNDERLINE,
         filled=True,
         bgcolor=COLOR1,
@@ -89,6 +88,7 @@ async def main(page: ft.Page):
 
     )
 
+    # ---------- CONTAINERS  ----------------------
     left01 = ft.Container(
         colu,
         bgcolor=COLOR1,
@@ -104,11 +104,30 @@ async def main(page: ft.Page):
         alignment=ft.alignment.center,
         width=100,
     )
+
+
+    # Open directory dialog
+    def get_directory_result(e: ft.FilePickerResultEvent):
+        directory_path.value = e.path if e.path else "Cancelled!"
+        directory_path.update()
+
+    get_directory_dialog = ft.FilePicker(on_result=get_directory_result)
+    directory_path = ft.Text()
+
+    buttonDirectory = ft.ElevatedButton(
+        text="Open Directory",
+        icon=ft.icons.FOLDER_OPEN,
+        on_click=lambda _: get_directory_dialog.get_directory_path(),
+        disabled=page.web,
+    )
+    
+
     right01 = ft.Container(
         bgcolor= COLOR1,
         alignment=ft.alignment.center,
         expand=True,
     )
+    
 
     gestureDetector1 = ft.GestureDetector(
         content=ft.VerticalDivider(),
@@ -127,11 +146,11 @@ async def main(page: ft.Page):
     row = ft.Row(
         expand=True,
         controls=[
-        left01,
-        gestureDetector1,
-        left02,
-        gestureDetector2,
-        right01,
+            left01,
+            gestureDetector1,
+            left02,
+            gestureDetector2,
+            right01,
         ]
     )
 
@@ -142,6 +161,7 @@ async def main(page: ft.Page):
                               expand=True,
                             )
     await page.add_async(container)
+    page.add(directory_path)
     pass
 # ft.app(port=3000,target=main,assets_dir="assets", view=ft.AppView.WEB_BROWSER)
 ft.app(target=main, assets_dir="assets") 
