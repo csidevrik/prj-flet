@@ -26,16 +26,16 @@ async def main(page: ft.Page):
         await page.window_destroy_async()
         await page.update_async()
     async def button_maximize(e):
-        page.window_height = 1080
-        page.window_width = 1920
+        page.window.height = 1080
+        page.window.width = 1920
         await page.update_async()
     async def button_minimize(e):
         page.window_minimized=True
         await page.update_async()
     
-    page.window_height = 600   
-    page.window_width = 600
-    page.window_resizable = True
+    page.window.height = 600   
+    page.window.width = 600
+    page.window.resizable = True
     # page.window_movable = True
     page.title = "PAYMENTS"
     page.window_title_bar_hidden = True
@@ -141,7 +141,7 @@ async def main(page: ft.Page):
                               bgcolor=COLOR1,
                               expand=True,
                             )
-    await page.add_async(container)
+    await page.add(container)
     pass
 # ft.app(port=3000,target=main,assets_dir="assets", view=ft.AppView.WEB_BROWSER)
 ft.app(target=main, assets_dir="assets") 
