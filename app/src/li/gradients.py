@@ -3,8 +3,7 @@ import json
 
 def gradient(name):
     # Obtener la ruta al archivo gradients.json
-    json_path = os.path.join(os.path.dirname(__file__), '..', 'datos', 'gradients.json')
-
+    json_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'gradients.json')
     with open(json_path, 'r') as file:
         data = json.load(file)
         for paleta in data:

@@ -31,8 +31,8 @@ class MyApp:
         await self.page.update_async()
 
     async def button_maximize(self, e):
-        self.page.window_height = 1080
-        self.page.window_width = 1920
+        self.page.window.height = 1080
+        self.page.window.width = 1920
         await self.page.update_async()
 
     async def button_minimize(self, e):
@@ -78,9 +78,9 @@ class MyApp:
 
     async def main(self, page: ft.Page):
         self.page = page
-        page.window_height = 600
-        page.window_width = 600
-        page.window_resizable = True
+        page.window.height = 600
+        page.window.width = 600
+        page.window.resizable = True
         page.title = "PAYMENTS"
         page.padding = 0
         page.appbar = self.create_appbar()
@@ -153,7 +153,7 @@ class MyApp:
             expand=True,
         )
 
-        await page.add_async(container)
+        await page.add(container)
 
     def run(self):
         ft.app(target=self.main, assets_dir="assets")
