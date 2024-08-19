@@ -160,7 +160,7 @@ async def main(page: ft.Page):
                               bgcolor=COLOR1,
                               expand=True,
                             )
-    await page.add(container)
+    page.add(container)
     page.add(directory_path)
     pass
 # ft.app(port=3000,target=main,assets_dir="assets", view=ft.AppView.WEB_BROWSER)

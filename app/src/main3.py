@@ -153,7 +153,7 @@ class MyApp:
             expand=True,
         )
 
-        await page.add(container)
+        page.add(container)
 
     def run(self):
         ft.app(target=self.main, assets_dir="assets")
