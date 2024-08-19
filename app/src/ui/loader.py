@@ -12,12 +12,12 @@ class Loader:
             content=ft.Column(
                 controls=[
                     ft.ProgressRing(),
-                    ft.Text("Cargando la aplicación...", color="white"),
+                    ft.Text("Loading the app...", color="white"),
                 ],
                 alignment="center",
                 horizontal_alignment="center",
             ),
-            bgcolor="#18684d",  # Color de fondo del loader
+            bgcolor="#303845",  # Color de fondo del loader
             alignment=ft.alignment.center,
             expand=True
         )

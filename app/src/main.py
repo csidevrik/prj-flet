@@ -47,7 +47,7 @@ async def main(page: ft.Page):
         # leading_width=10,
         title=ft.Text("PAYMENTS"),
         center_title=False,
-        bgcolor=COLOR1,
+        bgcolor=COLORR,
         actions=[
             ft.IconButton(ft.icons.MINIMIZE_SHARP, icon_color=COLOR2, on_click=button_minimize),
             ft.IconButton(ft.icons.MAXIMIZE_ROUNDED, icon_color=COLOR2, on_click=button_maximize),
