@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Button</title>
+    <style>
+        body {
+            background-color: #333;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .retro-button {
+            background-color: #1a1a1a;
+            border: 2px solid #555;
+            padding: 10px 20px;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            outline: none;
+            box-shadow: 2px 2px 0px #000, 4px 4px 0px #555;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        .retro-button:hover {
+            background-color: #333;
+        }
+
+        .retro-button:active {
+            box-shadow: 0 0 0 #000, 2px 2px 0 #555;
+            transform: translate(2px, 2px);
+        }
+
+        .retro-button:before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 2px solid #000;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<button class="retro-button">Aceptar</button>
+<button class="retro-button">Cancelar</button>
+
+</body>
+</html>
