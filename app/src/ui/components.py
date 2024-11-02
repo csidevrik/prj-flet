@@ -1,4 +1,5 @@
 import flet as ft
+from ui.utils import GRADIENT
 
 def create_appbar(event_handler):
     return ft.AppBar(
@@ -12,17 +13,25 @@ def create_appbar(event_handler):
             ft.IconButton(ft.icons.EXIT_TO_APP, icon_color="#222222", on_click=event_handler.button_exit),
         ],
     )
+def panel_submenu():
+    return ft.Container
+
+def panel_menu():
+    return ft.Container(
+        # expand=True,
+        gradient=GRADIENT,
+        border_radius=3,
+        width=160,
+    )
 
 def create_main_layout():
     # Suponiendo que aquí creas una fila principal con algunos elementos
-    row = ft.Row(
+    return ft.Row(
+        expand=True,
         controls=[
-            ft.Text("Hola, mundo!"),
-            ft.ElevatedButton(text="Click me"),
+            panel_menu(),
         ],
-        alignment="center",
-        vertical_alignment="center",
-        expand=True
     )
-    return row
-    pass
+    # return row
+    # pass
+

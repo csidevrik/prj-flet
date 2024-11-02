@@ -24,9 +24,9 @@ class Loader:
 
         # Agregar el loader a la página y actualizar
         self.page.add(self.loader_container)
-        await self.page.update_async()
+        self.page.update()
 
     async def hide_loader(self):
         # Remover el loader de la página y actualizar
         self.page.controls.remove(self.loader_container)
-        await self.page.update_async()
+        self.page.update()

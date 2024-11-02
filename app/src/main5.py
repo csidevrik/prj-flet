@@ -22,7 +22,7 @@ async def main(page: ft.Page):
     event_handler = WindowEventHandler(page)
 
     # Configurar la UI principal
-    page.appbar = create_appbar(event_handler)
+    # page.appbar = create_appbar(event_handler)
     page.add(create_main_layout())
 
     # Ocultar el loader
