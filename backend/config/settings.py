@@ -16,7 +16,28 @@ def setup_logging():
         ]
     )
 
-# Configuraciones generales
+# Configuraciones generales de la aplicación
 APP_NAME = "Email Client"
 CONFIG_DIR = Path.home() / ".email_client"
 CONFIG_FILE = CONFIG_DIR / "config.json"
+
+# Configuraciones de correo
+DEFAULT_SMTP_PORT = 465
+MAX_ATTACHMENT_SIZE_MB = 25
+TIMEOUT_SECONDS = 30
+
+# Configuraciones de archivos
+ALLOWED_EXTENSIONS = ['pdf']
+TEMP_DIR = CONFIG_DIR / "temp"
+BACKUP_DIR = CONFIG_DIR / "backups"
+MAX_BACKUPS = 5
+
+# Mensajes de error comunes
+ERROR_MESSAGES = {
+    'auth_error': "Error de autenticación: Usuario o contraseña incorrectos",
+    'connection_error': "Error de conexión: No se puede conectar al servidor",
+    'timeout_error': "Error: Tiempo de espera agotado",
+    'attachment_size': "Error: El archivo excede el tamaño máximo permitido",
+    'invalid_email': "Error: Dirección de correo inválida",
+    'no_connection': "Error: No hay conexión establecida"
+}

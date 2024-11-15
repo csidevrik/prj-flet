@@ -1,0 +1,17 @@
+// # Crear configuración
+config = EmailConfig(
+    smtp_server="mail.emov.gob.ec",
+    smtp_port=465,
+    email="csigua@emov.gob.ec",
+    password="Telabarium.$#"
+)
+
+// # Validar configuración
+if config.validate():
+    print("Configuración válida")
+
+// # Crear copia con cambios
+config_nuevo = config.clone(smtp_port=587)
+
+// # Convertir a diccionario para guardar
+config_dict = config.to_dict()
