@@ -1,6 +1,5 @@
 import flet as ft
 import logging
-import asyncio
 from backend.services.email_service import EmailService
 from backend.services.storage_service import StorageService
 from backend.config.email_config import EmailConfig
@@ -55,28 +54,6 @@ class SettingsView(ft.UserControl):
             ],
             visible=False
         )
-
-        # Botones de acción
-        self.test_button = ft.FilledTonalButton(
-            "Probar Conexión",
-            icon=ft.icons.NETWORK_CHECK,
-            on_click=self.test_connection
-        )
-        
-        self.save_button = ft.FilledButton(
-            "Guardar Cambios",
-            icon=ft.icons.SAVE,
-            on_click=self.save_settings
-        )
-
-        # Fila de botones
-        self.buttons_row = ft.Row(
-            controls=[
-                self.test_button,
-                self.save_button
-            ],
-            alignment=ft.MainAxisAlignment.END
-        )
         
         return ft.Container(
             content=ft.Column(
@@ -116,7 +93,21 @@ class SettingsView(ft.UserControl):
                     self.status_row,
                     
                     # Botones de acción
-                    self.buttons_row
+                    ft.Row(
+                        controls=[
+                            ft.FilledTonalButton(
+                                "Probar Conexión",
+                                icon=ft.icons.NETWORK_CHECK,
+                                on_click=self.test_connection
+                            ),
+                            ft.FilledButton(
+                                "Guardar Cambios",
+                                icon=ft.icons.SAVE,
+                                on_click=self.save_settings
+                            )
+                        ],
+                        alignment=ft.MainAxisAlignment.END
+                    )
                 ],
                 spacing=20
             ),
@@ -146,12 +137,6 @@ class SettingsView(ft.UserControl):
         except ValueError:
             return False, "El puerto debe ser un número"
         return True, ""
-
-    def set_buttons_state(self, enabled: bool):
-        """Habilita o deshabilita los botones"""
-        self.test_button.disabled = not enabled
-        self.save_button.disabled = not enabled
-        self.update()
     
     async def test_connection(self, e):
         """Prueba la conexión con el servidor"""
@@ -159,9 +144,6 @@ class SettingsView(ft.UserControl):
         if not is_valid:
             self.show_status(error_message, is_error=True)
             return
-
-        # Deshabilitar botones durante la prueba
-        self.set_buttons_state(False)
             
         self.show_status("Probando conexión...", show_progress=True)
         
@@ -171,9 +153,7 @@ class SettingsView(ft.UserControl):
                 smtp_server=self.server_input.value,
                 smtp_port=int(self.port_input.value),
                 email=self.email_input.value,
-                password=self.password_input.value or (
-                    self.email_service.config.password if self.email_service.config else ""
-                )
+                password=self.password_input.value or self.email_service.config.password
             )
             
             # Probar conexión
@@ -187,9 +167,6 @@ class SettingsView(ft.UserControl):
         except Exception as e:
             logger.error(f"Error probando conexión: {str(e)}")
             self.show_status(f"✗ Error: {str(e)}", is_error=True)
-        finally:
-            # Rehabilitar botones
-            self.set_buttons_state(True)
     
     async def save_settings(self, e):
         """Guarda la configuración"""
@@ -199,7 +176,9 @@ class SettingsView(ft.UserControl):
             return
         
         # Deshabilitar botones mientras se guarda
-        self.set_buttons_state(False)
+        for control in self.content.controls[-1].controls[-1].controls:
+            control.disabled = True
+        self.update()
         
         try:
             self.show_status("Guardando configuración...", show_progress=True)
@@ -209,9 +188,8 @@ class SettingsView(ft.UserControl):
                 smtp_server=self.server_input.value,
                 smtp_port=int(self.port_input.value),
                 email=self.email_input.value,
-                password=self.password_input.value or (
-                    self.email_service.config.password if self.email_service.config else ""
-                )
+                # Si no hay nueva contraseña, mantener la anterior
+                password=self.password_input.value or self.email_service.config.password if self.email_service.config else self.password_input.value
             )
             
             # Probar conexión antes de guardar
@@ -226,7 +204,7 @@ class SettingsView(ft.UserControl):
                     
                     self.show_status("✓ Configuración guardada exitosamente")
                     
-                    # Mostrar mensaje y regresar
+                    # Usar ft.ProgressBar en lugar de sleep
                     self.show_success_and_return()
                 else:
                     self.show_status("Error guardando configuración", is_error=True)
@@ -238,7 +216,9 @@ class SettingsView(ft.UserControl):
             self.show_status(f"Error: {str(e)}", is_error=True)
         finally:
             # Rehabilitar botones
-            self.set_buttons_state(True)
+            for control in self.content.controls[-1].controls[-1].controls:
+                control.disabled = False
+            self.update()
     
     def show_success_and_return(self):
         """Muestra mensaje de éxito y regresa a la vista principal"""
@@ -252,21 +232,14 @@ class SettingsView(ft.UserControl):
             content=ft.Text("Configuración guardada exitosamente"),
             action="OK",
             action_color=ft.colors.WHITE,
-            bgcolor=ft.colors.GREEN_400,
-            duration=2000
+            bgcolor=ft.colors.GREEN_400
         )
         
         # Mostrar Snackbar
         self.page.show_snack_bar(self.snack_bar)
         
         # Programar el retorno después de 2 segundos
-        # self.page.after(2, return_to_main)
-
-        async def delayed_return():
-            await asyncio.sleep(2)
-            self.go_back(None)
-        
-        asyncio.create_task(delayed_return())
+        self.page.after(2, return_to_main)
     
     def show_success_message(self, message: str):
         """Muestra un mensaje de éxito"""

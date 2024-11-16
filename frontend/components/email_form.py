@@ -103,7 +103,7 @@ class EmailForm(ft.UserControl):
                                                 )
                                             ),
                                             ft.Text(
-                                                "Máximo 25MB por archivo",
+                                                "Máximo 10MB por archivo",
                                                 color=ft.colors.BLUE_GREY_400,
                                                 size=12,
                                                 italic=True

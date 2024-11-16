@@ -23,7 +23,7 @@ CONFIG_FILE = CONFIG_DIR / "config.json"
 
 # Configuraciones de correo
 DEFAULT_SMTP_PORT = 465
-MAX_ATTACHMENT_SIZE_MB = 25
+MAX_ATTACHMENT_SIZE_MB = 10
 TIMEOUT_SECONDS = 30
 
 # Configuraciones de archivos
