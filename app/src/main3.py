@@ -27,31 +27,31 @@ class MyApp:
         self.left02 = None
 
     async def button_exit(self, e):
-        await self.page.window_destroy_async()
-        await self.page.update_async()
+        self.page.window.destroy()
+        self.page.update()
 
     async def button_maximize(self, e):
         self.page.window.height = 1080
         self.page.window.width = 1920
-        await self.page.update_async()
+        self.page.update()
 
     async def button_minimize(self, e):
-        self.page.window_minimized = True
-        await self.page.update_async()
+        self.page.window.minimized = True
+        self.page.update()
 
     async def move_vertical_divider1(self, e: ft.DragUpdateEvent):
         if (e.delta_x > 0 and self.left01.width < LIMIT_VD1_MAX) or (e.delta_x < 0 and self.left01.width > LIMIT_VD1_MIN):
             self.left01.width += e.delta_x
-        await self.left01.update_async()
+        self.left01.update()
 
     async def move_vertical_divider2(self, e: ft.DragUpdateEvent):
         if (e.delta_x > 0 and self.left02.width < LIMIT_VD2_MAX) or (e.delta_x < 0 and self.left02.width > LIMIT_VD2_MIN):
             self.left02.width += e.delta_x
-        await self.left02.update_async()
+            self.left02.update()
 
     async def show_draggable_cursor(self, e: ft.HoverEvent):
         e.control.mouse_cursor = ft.MouseCursor.RESIZE_LEFT_RIGHT
-        await e.control.update_async()
+        e.control.update()
 
     def create_appbar(self):
         return ft.AppBar(
