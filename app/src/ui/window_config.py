@@ -10,3 +10,4 @@ def setup_window(page: ft.Page):
     # page.window_title_bar_buttons_hidden = True
     page.padding = 0
     # page.background_color = GRADIENT
+    page.window_icon = "assets/favicon.ico"
