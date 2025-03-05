@@ -18,7 +18,7 @@ def setup_logging():
 
 # Configuraciones generales de la aplicación
 APP_NAME = "Email Client"
-CONFIG_DIR = Path.home() / ".email_client"
+CONFIG_DIR = Path(__file__).parent.parent.parent  # Sube tres niveles desde settings.py
 CONFIG_FILE = CONFIG_DIR / "config.json"
 
 # Configuraciones de correo

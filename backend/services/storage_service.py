@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Optional, Dict, Any
 from datetime import datetime
 from ..config.email_config import EmailConfig
+from ..config.settings import CONFIG_DIR, CONFIG_FILE
 from ..utils.security import encrypt_data, decrypt_data
 
 logger = logging.getLogger(__name__)
@@ -13,10 +14,25 @@ logger = logging.getLogger(__name__)
 class StorageService:
     def __init__(self):
         """Inicializa el servicio de almacenamiento"""
-        self.config_dir = Path.home() / ".email_client"
-        self.config_file = self.config_dir / "config.json"
+        self.config_dir = CONFIG_DIR
+        self.config_file = CONFIG_FILE
         self.temp_dir = self.config_dir / "temp"
         self.logs_dir = self.config_dir / "logs"
+        
+        # Intentar migrar configuración antigua si existe
+        old_config_dir = Path.home() / ".email_client"
+        old_config_file = old_config_dir / "config.json"
+        if old_config_file.exists() and not self.config_file.exists():
+            try:
+                # Copiar configuración antigua a nueva ubicación
+                self.config_dir.mkdir(parents=True, exist_ok=True)
+                with open(old_config_file, 'r', encoding='utf-8') as source:
+                    with open(self.config_file, 'w', encoding='utf-8') as target:
+                        target.write(source.read())
+                logger.info("Configuración antigua migrada exitosamente")
+            except Exception as e:
+                logger.error(f"Error migrando configuración antigua: {str(e)}")
+        
         self.setup_directories()
 
     def setup_directories(self) -> None:
@@ -56,9 +72,21 @@ class StorageService:
                 'last_updated': datetime.now().isoformat()
             }
 
+            logger.info(f"Guardando configuración en: {self.config_file}")
+            logger.info(f"Datos a guardar: {config_data}")
+
+            # Asegurarse que el directorio existe
+            self.config_dir.mkdir(parents=True, exist_ok=True)
+
             # Guardar datos no sensibles en archivo
             with open(self.config_file, 'w', encoding='utf-8') as f:
                 json.dump(config_data, f, indent=4)
+
+            # Verificar que se guardó correctamente
+            if self.config_file.exists():
+                logger.info(f"Archivo guardado correctamente. Tamaño: {self.config_file.stat().st_size} bytes")
+            else:
+                logger.error("El archivo no existe después de guardarlo")
 
             # Guardar contraseña de forma segura usando keyring
             keyring.set_password("email_client", config.email, config.password)
@@ -71,6 +99,7 @@ class StorageService:
 
         except Exception as e:
             logger.error(f"Error guardando configuración: {str(e)}")
+            logger.exception("Detalles del error:")
             return False
 
     def load_config(self) -> Optional[EmailConfig]:
