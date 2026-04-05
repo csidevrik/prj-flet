@@ -24,14 +24,14 @@ GRADIENT=ft.LinearGradient(
 async def main(page: ft.Page):
     async def button_exit(e):
         await page.window_destroy_async()
-        await page.update_async()
+        await page.update()
     async def button_maximize(e):
         page.window.height = 1080
         page.window.width = 1920
-        await page.update_async()
+        await page.update()
     async def button_minimize(e):
         page.window_minimized=True
-        await page.update_async()
+        await page.update()
     
     page.window.height = 600   
     page.window.width = 600
@@ -58,16 +58,16 @@ async def main(page: ft.Page):
     async def move_vertical_divider1(e: ft.DragUpdateEvent):
         if (e.delta_x > 0 and left01.width < LIMIT_VD1_MAX) or (e.delta_x < 0 and left01.width > LIMIT_VD1_MIN):
             left01.width += e.delta_x
-        await left01.update_async()
+        await left01.update()
 
     async def move_vertical_divider2(e: ft.DragUpdateEvent):
         if (e.delta_x > 0 and left02.width < LIMIT_VD2_MAX) or (e.delta_x < 0 and left02.width > LIMIT_VD2_MIN):
             left02.width += e.delta_x
-        await left02.update_async()
+        await left02.update()
 
     async def show_draggable_cursor(e: ft.HoverEvent):
         e.control.mouse_cursor = ft.MouseCursor.RESIZE_LEFT_RIGHT
-        await e.control.update_async()
+        await e.control.update()
     # ---------- APPLICATION LAYOUT  ----------------------
 
     inputSearch = ft.TextField(
@@ -101,7 +101,7 @@ async def main(page: ft.Page):
     )
     left02 = ft.Container(
         bgcolor= COLOR1,
-        alignment=ft.alignment.center,
+        alignment=ft.Alignment(0.5, 0.5),
         width=100,
     )
 
@@ -124,7 +124,7 @@ async def main(page: ft.Page):
 
     right01 = ft.Container(
         bgcolor= COLOR1,
-        alignment=ft.alignment.center,
+        alignment=ft.Alignment(0.5, 0.5),
         expand=True,
     )
     

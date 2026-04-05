@@ -18,15 +18,15 @@ class Loader:
                 horizontal_alignment="center",
             ),
             bgcolor="#18684d",  # Color de fondo del loader
-            alignment=ft.alignment.center,
+            alignment=ft.Alignment(0.5, 0.5),
             expand=True
         )
 
         # Agregar el loader a la página y actualizar
         self.page.add(self.loader_container)
-        await self.page.update_async()
+        await self.page.update()
 
     async def hide_loader(self):
         # Remover el loader de la página y actualizar
         self.page.controls.remove(self.loader_container)
-        await self.page.update_async()
+        await self.page.update()
