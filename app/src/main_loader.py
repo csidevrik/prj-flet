@@ -22,5 +22,5 @@ class Loader:
         self.page.add(self.loader_container)
 
     def hide_loader(self):
-        self.page.controls.remove(self.loader_container)
-        self.page.update()
+        if self.loader_container:
+            self.page.remove(self.loader_container)

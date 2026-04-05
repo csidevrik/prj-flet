@@ -2,10 +2,10 @@ import flet as ft
 
 def main(page):
 
-    def close_anchor(e):
+    async def close_anchor(e):
         text = f"Color {e.control.data}"
         print(f"closing view from {text}")
-        anchor.close_view(text)
+        await anchor.close_view(text)
 
     def handle_change(e):
         print(f"handle_change e.data: {e.data}")
@@ -13,7 +13,7 @@ def main(page):
     def handle_submit(e):
         print(f"handle_submit e.data: {e.data}")
 
-    def handle_tap(e):
+    def handle_tap(_):
         print(f"handle_tap")
 
     anchor = ft.SearchBar(
