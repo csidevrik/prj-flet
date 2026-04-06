@@ -14,7 +14,7 @@ COLORR = "#00e8b2"
 COLORQ = "#f3ae35"
 
 GRADIENT = ft.LinearGradient(
-    begin=ft.alignment.top_left,
+    begin=ft.Alignment(0, 0),
     end=ft.Alignment(0.8, 1),
     colors=gradient("Kye Meh"),
     rotation=math.pi / 4.6,

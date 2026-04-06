@@ -15,23 +15,23 @@ COLORQ="#f3ae35"
 COLOR2="#222222"
 
 GRADIENT=ft.LinearGradient(
-    begin=ft.alignment.top_left,
+    begin=ft.Alignment(-1, -1),
     end=ft.Alignment(0.8,1),
     colors = gradient("Kye Meh"),
     rotation=math.pi/4.6
 )
 
-async def main(page: ft.Page):
+def main(page: ft.Page):
     async def button_exit(e):
-        await page.window_destroy_async()
-        await page.update()
-    async def button_maximize(e):
+        await page.window.destroy()
+        page.update()
+    def button_maximize(e):
         page.window.height = 1080
         page.window.width = 1920
-        await page.update()
-    async def button_minimize(e):
-        page.window_minimized=True
-        await page.update()
+        page.update()
+    def button_minimize(e):
+        page.window.minimized = True
+        page.update()
     
     page.window.height = 600   
     page.window.width = 600
@@ -43,31 +43,33 @@ async def main(page: ft.Page):
     page.padding = 0
     # page.background_color = GRADIENT
     page.appbar = ft.AppBar(
-        leading=ft.Icon(ft.icons.WEB),
+        leading=ft.Icon(ft.Icons.WEB),
         # leading_width=10,
         title=ft.Text("PAYMENTS"),
         center_title=False,
         bgcolor=COLOR1,
         actions=[
-            ft.IconButton(ft.icons.MINIMIZE_SHARP, icon_color=COLOR2, on_click=button_minimize),
-            ft.IconButton(ft.icons.MAXIMIZE_ROUNDED, icon_color=COLOR2, on_click=button_maximize),
-            ft.IconButton(ft.icons.EXIT_TO_APP, icon_color=COLOR2, on_click=button_exit),
+            ft.IconButton(ft.Icons.MINIMIZE_SHARP, icon_color=COLOR2, on_click=button_minimize),
+            ft.IconButton(ft.Icons.MAXIMIZE_ROUNDED, icon_color=COLOR2, on_click=button_maximize),
+            ft.IconButton(ft.Icons.EXIT_TO_APP, icon_color=COLOR2, on_click=button_exit),
         ],
     )
 
-    async def move_vertical_divider1(e: ft.DragUpdateEvent):
-        if (e.delta_x > 0 and left01.width < LIMIT_VD1_MAX) or (e.delta_x < 0 and left01.width > LIMIT_VD1_MIN):
-            left01.width += e.delta_x
-        await left01.update()
+    def move_vertical_divider1(e: ft.DragUpdateEvent):
+        dx = e.local_delta.x
+        if (dx > 0 and left01.width < LIMIT_VD1_MAX) or (dx < 0 and left01.width > LIMIT_VD1_MIN):
+            left01.width += dx
+        left01.update()
 
-    async def move_vertical_divider2(e: ft.DragUpdateEvent):
-        if (e.delta_x > 0 and left02.width < LIMIT_VD2_MAX) or (e.delta_x < 0 and left02.width > LIMIT_VD2_MIN):
-            left02.width += e.delta_x
-        await left02.update()
+    def move_vertical_divider2(e: ft.DragUpdateEvent):
+        dx = e.local_delta.x
+        if (dx > 0 and left02.width < LIMIT_VD2_MAX) or (dx < 0 and left02.width > LIMIT_VD2_MIN):
+            left02.width += dx
+        left02.update()
 
-    async def show_draggable_cursor(e: ft.HoverEvent):
+    def show_draggable_cursor(e: ft.HoverEvent):
         e.control.mouse_cursor = ft.MouseCursor.RESIZE_LEFT_RIGHT
-        await e.control.update()
+        e.control.update()
     # ---------- APPLICATION LAYOUT  ----------------------
 
     inputSearch = ft.TextField(
@@ -94,8 +96,8 @@ async def main(page: ft.Page):
         bgcolor=COLOR1,
         gradient=GRADIENT,
         # border=ft.border.all(1,"#f6f8fa"),
-        border=ft.border.only(left=ft.BorderSide(1,"green")),
-        alignment=ft.alignment.center_right,
+        border=ft.Border.only(left=ft.BorderSide(1,"green")),
+        alignment=ft.Alignment(0.5, 0.5),
         border_radius=3,
         width=100,
     )
@@ -107,16 +109,19 @@ async def main(page: ft.Page):
 
 
     # Open directory dialog
-    def get_directory_result(e: ft.FilePickerResultEvent):
+    def get_directory_result(e):
         directory_path.value = e.path if e.path else "Cancelled!"
         directory_path.update()
 
-    get_directory_dialog = ft.FilePicker(on_result=get_directory_result)
+    get_directory_dialog = ft.FilePicker()
+    get_directory_dialog.on_result = get_directory_result
     directory_path = ft.Text()
 
-    buttonDirectory = ft.ElevatedButton(
-        text="Open Directory",
-        icon=ft.icons.FOLDER_OPEN,
+    buttonDirectory = ft.Button(
+        content=ft.Row(
+            controls=[ft.Icon(ft.Icons.FOLDER_OPEN), ft.Text("Open Directory")],
+            tight=True,
+        ),
         on_click=lambda _: get_directory_dialog.get_directory_path(),
         disabled=page.web,
     )
@@ -164,4 +169,4 @@ async def main(page: ft.Page):
     page.add(directory_path)
     pass
 # ft.app(port=3000,target=main,assets_dir="assets", view=ft.AppView.WEB_BROWSER)
-ft.app(target=main, assets_dir="assets") 
+ft.run(main, assets_dir="assets") 
