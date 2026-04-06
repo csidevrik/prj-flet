@@ -4,7 +4,7 @@ def main(page: ft.Page):
     page.title = "Generador de Banners ASCII Aruba"
     page.padding = 20
     page.spacing = 20
-    page.theme = ft.Theme(color_scheme_seed=ft.colors.BLUE)
+    page.theme = ft.Theme(color_scheme_seed=ft.Colors.BLUE)
 
     # Template exacto del banner
     BANNER_TEMPLATE = """\
@@ -36,7 +36,7 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
         min_lines=20,
         max_lines=20,
         border=ft.InputBorder.NONE,
-        bgcolor=ft.colors.WHITE,
+        bgcolor=ft.Colors.WHITE,
         border_radius=8,
         text_style=ft.TextStyle(
             size=6,  # Tamaño reducido a 6
@@ -51,7 +51,7 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
         min_lines=10,
         max_lines=10,
         border=ft.InputBorder.NONE,
-        bgcolor=ft.colors.GREY_50,
+        bgcolor=ft.Colors.GREY_50,
         border_radius=8,
         text_style=ft.TextStyle(
             size=4,  # Tamaño aún más pequeño para el minimapa
@@ -99,7 +99,7 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
     # Estilo común para los campos
     field_style = {
         "border": ft.InputBorder.UNDERLINE,
-        "bgcolor": ft.colors.WHITE,
+        "bgcolor": ft.Colors.WHITE,
         "height": 45,
         "border_radius": 8,
     }
@@ -165,9 +165,9 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
         )
 
     # Botón de copiar
-    copy_button = ft.ElevatedButton(
+    copy_button = ft.Button(
         "Copiar al portapapeles",
-        icon=ft.icons.COPY,
+        icon=ft.Icons.COPY,
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=10),
         ),
@@ -175,9 +175,9 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
     )
 
     # Botón de vista previa
-    preview_button = ft.ElevatedButton(
+    preview_button = ft.Button(
         "Generar Vista Previa",
-        icon=ft.icons.PREVIEW,
+        icon=ft.Icons.PREVIEW,
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=10),
         ),
@@ -278,7 +278,7 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
                     "Generador de Banners ASCII Aruba",
                     size=32,
                     weight=ft.FontWeight.BOLD,
-                    color=ft.colors.BLUE,
+                    color=ft.Colors.BLUE,
                 ),
                 padding=ft.padding.only(bottom=20),
             ),
@@ -303,4 +303,4 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
     page.add(main_column)
     generate_banner()  # Generar banner inicial
 
-ft.app(target=main)
+ft.run(main)

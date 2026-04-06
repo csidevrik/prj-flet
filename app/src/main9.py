@@ -4,7 +4,7 @@ def main(page: ft.Page):
     page.title = "Generador de Banners ASCII Aruba"
     page.padding = 20
     page.spacing = 20
-    page.theme = ft.Theme(color_scheme_seed=ft.colors.BLUE)
+    page.theme = ft.Theme(color_scheme_seed=ft.Colors.BLUE)
 
     # Campo de previsualización
     preview = ft.TextField(
@@ -13,7 +13,7 @@ def main(page: ft.Page):
         min_lines=20,
         max_lines=20,
         border=ft.InputBorder.UNDERLINE,
-        bgcolor=ft.colors.WHITE,
+        bgcolor=ft.Colors.WHITE,
         border_radius=8
     )
 
@@ -126,7 +126,7 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |
     # Estilo común para los campos
     field_border = ft.InputBorder.UNDERLINE
     field_radius = 8
-    field_bgcolor = ft.colors.WHITE
+    field_bgcolor = ft.Colors.WHITE
     field_height = 45
 
     # Campos del formulario
@@ -207,18 +207,18 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |
         )
 
     # Botones
-    copy_button = ft.ElevatedButton(
+    copy_button = ft.Button(
         "Copiar al portapapeles",
-        icon=ft.icons.COPY,
+        icon=ft.Icons.COPY,
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=10),
         ),
         on_click=copy_to_clipboard
     )
 
-    align_button = ft.ElevatedButton(
+    align_button = ft.Button(
         "Alinear Banner",
-        icon=ft.icons.FORMAT_ALIGN_CENTER,
+        icon=ft.Icons.FORMAT_ALIGN_CENTER,
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=10),
         ),
@@ -303,7 +303,7 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |
                     "Generador de Banners ASCII Aruba",
                     size=32,
                     weight=ft.FontWeight.BOLD,
-                    color=ft.colors.BLUE,
+                    color=ft.Colors.BLUE,
                 ),
                 padding=ft.padding.only(bottom=20),
             ),
@@ -316,4 +316,4 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |
     page.add(main_column)
     generate_banner()  # Generar banner inicial
 
-ft.app(target=main)
+ft.run(main)

@@ -89,9 +89,9 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                          |
             ft.SnackBar(content=ft.Text("¡Banner copiado al portapapeles!"))
         )
 
-    copy_button = ft.ElevatedButton(
+    copy_button = ft.Button(
         "Copiar al portapapeles",
-        icon=ft.icons.COPY,
+        icon=ft.Icons.COPY,
         on_click=copy_to_clipboard
     )
 
@@ -129,4 +129,4 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                          |
     page.add(container)
     generate_banner()  # Generar banner inicial
 
-ft.app(target=main)
+ft.run(main)

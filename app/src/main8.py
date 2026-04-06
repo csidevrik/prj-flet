@@ -4,7 +4,7 @@ def main(page: ft.Page):
     page.title = "Generador de Banners ASCII Aruba"
     page.padding = 20
     page.spacing = 20
-    page.theme = ft.Theme(color_scheme_seed=ft.colors.BLUE)
+    page.theme = ft.Theme(color_scheme_seed=ft.Colors.BLUE)
     
     def generate_banner():
         # Constantes para alineación
@@ -79,7 +79,7 @@ def main(page: ft.Page):
     # Estilo común para los campos de texto
     field_border = ft.InputBorder.UNDERLINE
     field_radius = 8
-    field_bgcolor = ft.colors.WHITE
+    field_bgcolor = ft.Colors.WHITE
     field_height = 45
 
     # Campos del formulario con estilo mejorado y validación
@@ -217,9 +217,9 @@ def main(page: ft.Page):
         )
 
     # Botón para copiar
-    copy_button = ft.ElevatedButton(
+    copy_button = ft.Button(
         "Copiar al portapapeles",
-        icon=ft.icons.COPY,
+        icon=ft.Icons.COPY,
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=10),
         ),
@@ -250,7 +250,7 @@ def main(page: ft.Page):
                     "Generador de Banners ASCII Aruba",
                     size=32,
                     weight=ft.FontWeight.BOLD,
-                    color=ft.colors.BLUE,
+                    color=ft.Colors.BLUE,
                 ),
                 padding=ft.padding.only(bottom=20),
             ),
@@ -263,4 +263,4 @@ def main(page: ft.Page):
     page.add(main_column)
     generate_banner()  # Generar banner inicial
 
-ft.app(target=main)
+ft.run(main)

@@ -4,7 +4,7 @@ def main(page: ft.Page):
     page.title = "Generador de Banners ASCII Aruba"
     page.padding = 20
     page.spacing = 20
-    page.theme = ft.Theme(color_scheme_seed=ft.colors.BLUE)
+    page.theme = ft.Theme(color_scheme_seed=ft.Colors.BLUE)
 
     # Template exacto del banner
     BANNER_TEMPLATE = """\
@@ -36,7 +36,7 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
         min_lines=20,
         max_lines=20,
         border=ft.InputBorder.NONE,
-        bgcolor=ft.colors.WHITE,
+        bgcolor=ft.Colors.WHITE,
         border_radius=8,
         text_style=ft.TextStyle(
             size=6,
@@ -51,7 +51,7 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
         min_lines=10,
         max_lines=10,
         border=ft.InputBorder.NONE,
-        bgcolor=ft.colors.GREY_50,
+        bgcolor=ft.Colors.GREY_50,
         border_radius=8,
         text_style=ft.TextStyle(
             size=4,
@@ -139,7 +139,7 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
     # Estilo común para los campos
     field_style = {
         "border": ft.InputBorder.UNDERLINE,
-        "bgcolor": ft.colors.WHITE,
+        "bgcolor": ft.Colors.WHITE,
         "height": 45,
         "border_radius": 8,
     }
@@ -208,22 +208,22 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
     alignment_controls = ft.Row(
         controls=[
             ft.IconButton(
-                icon=ft.icons.FORMAT_ALIGN_LEFT,
+                icon=ft.Icons.FORMAT_ALIGN_LEFT,
                 on_click=lambda _: align_text("left"),
                 tooltip="Alinear a la izquierda",
-                icon_color=ft.colors.BLUE,
+                icon_color=ft.Colors.BLUE,
             ),
             ft.IconButton(
-                icon=ft.icons.FORMAT_ALIGN_CENTER,
+                icon=ft.Icons.FORMAT_ALIGN_CENTER,
                 on_click=lambda _: align_text("center"),
                 tooltip="Centrar",
-                icon_color=ft.colors.BLUE,
+                icon_color=ft.Colors.BLUE,
             ),
             ft.IconButton(
-                icon=ft.icons.FORMAT_ALIGN_RIGHT,
+                icon=ft.Icons.FORMAT_ALIGN_RIGHT,
                 on_click=lambda _: align_text("right"),
                 tooltip="Alinear a la derecha",
-                icon_color=ft.colors.BLUE,
+                icon_color=ft.Colors.BLUE,
             ),
             ft.VerticalDivider(width=1),
             ft.TextField(
@@ -243,17 +243,17 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
     # Botones principales
     main_buttons = ft.Row(
         controls=[
-            ft.ElevatedButton(
+            ft.Button(
                 "Generar Vista Previa",
-                icon=ft.icons.PREVIEW,
+                icon=ft.Icons.PREVIEW,
                 style=ft.ButtonStyle(
                     shape=ft.RoundedRectangleBorder(radius=10),
                 ),
                 on_click=generate_preview
             ),
-            ft.ElevatedButton(
+            ft.Button(
                 "Copiar al portapapeles",
-                icon=ft.icons.COPY,
+                icon=ft.Icons.COPY,
                 style=ft.ButtonStyle(
                     shape=ft.RoundedRectangleBorder(radius=10),
                 ),
@@ -355,7 +355,7 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
                     "Generador de Banners ASCII Aruba",
                     size=32,
                     weight=ft.FontWeight.BOLD,
-                    color=ft.colors.BLUE,
+                    color=ft.Colors.BLUE,
                 ),
                 padding=ft.padding.only(bottom=20),
             ),
@@ -380,4 +380,4 @@ P#BBBBPJPBBBJ  !BBBGJ5BBBB#5    |                                            |
     page.add(main_column)
     generate_banner()  # Generar banner inicial
 
-ft.app(target=main)
+ft.run(main)

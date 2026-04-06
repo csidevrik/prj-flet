@@ -31,4 +31,4 @@ async def main(page: ft.Page):
     # Agregar más elementos o configuraciones si es necesario
 
 # Ejecutar la aplicación
-ft.app(target=main, assets_dir="assets")
+ft.run(main, assets_dir="assets")

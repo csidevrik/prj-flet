@@ -14,7 +14,7 @@ COLORR = "#00e8b2"
 COLORQ = "#f3ae35"
 
 GRADIENT = ft.LinearGradient(
-    begin=ft.alignment.top_left,
+    begin=ft.Alignment(-1, -1),
     end=ft.Alignment(0.8, 1),
     colors=gradient("Kye Meh"),
     rotation=math.pi / 4.6,
@@ -27,42 +27,41 @@ class MyApp:
         self.left02 = None
 
     async def button_exit(self, e):
-        await self.page.window_destroy_async()
-        await self.page.update_async()
+        await self.page.window.close()
 
     async def button_maximize(self, e):
         self.page.window.height = 1080
         self.page.window.width = 1920
-        await self.page.update_async()
+        self.page.update()
 
     async def button_minimize(self, e):
-        self.page.window_minimized = True
-        await self.page.update_async()
+        self.page.window.minimized = True
+        self.page.update()
 
     async def move_vertical_divider1(self, e: ft.DragUpdateEvent):
-        if (e.delta_x > 0 and self.left01.width < LIMIT_VD1_MAX) or (e.delta_x < 0 and self.left01.width > LIMIT_VD1_MIN):
-            self.left01.width += e.delta_x
-        await self.left01.update_async()
+        if (e.delta.dx > 0 and self.left01.width < LIMIT_VD1_MAX) or (e.delta.dx < 0 and self.left01.width > LIMIT_VD1_MIN):
+            self.left01.width += e.delta.dx
+        self.left01.update()
 
     async def move_vertical_divider2(self, e: ft.DragUpdateEvent):
-        if (e.delta_x > 0 and self.left02.width < LIMIT_VD2_MAX) or (e.delta_x < 0 and self.left02.width > LIMIT_VD2_MIN):
-            self.left02.width += e.delta_x
-        await self.left02.update_async()
+        if (e.delta.dx > 0 and self.left02.width < LIMIT_VD2_MAX) or (e.delta.dx < 0 and self.left02.width > LIMIT_VD2_MIN):
+            self.left02.width += e.delta.dx
+        self.left02.update()
 
     async def show_draggable_cursor(self, e: ft.HoverEvent):
         e.control.mouse_cursor = ft.MouseCursor.RESIZE_LEFT_RIGHT
-        await e.control.update_async()
+        e.control.update()
 
     def create_appbar(self):
         return ft.AppBar(
-            leading=ft.Icon(ft.icons.WEB),
+            leading=ft.Icon(ft.Icons.WEB),
             title=ft.Text("PAYMENTS"),
             center_title=False,
             bgcolor=COLOR1,
             actions=[
-                ft.IconButton(ft.icons.MINIMIZE_SHARP, icon_color=COLOR2, on_click=self.button_minimize),
-                ft.IconButton(ft.icons.MAXIMIZE_ROUNDED, icon_color=COLOR2, on_click=self.button_maximize),
-                ft.IconButton(ft.icons.EXIT_TO_APP, icon_color=COLOR2, on_click=self.button_exit),
+                ft.IconButton(ft.Icons.MINIMIZE_SHARP, icon_color=COLOR2, on_click=self.button_minimize),
+                ft.IconButton(ft.Icons.MAXIMIZE_ROUNDED, icon_color=COLOR2, on_click=self.button_maximize),
+                ft.IconButton(ft.Icons.EXIT_TO_APP, icon_color=COLOR2, on_click=self.button_exit),
             ],
         )
 
@@ -90,12 +89,12 @@ class MyApp:
             text_align=ft.TextAlign.CENTER,
             border=ft.InputBorder.UNDERLINE,
             filled=True,
-            bgcolor=COLOR1,            
+            bgcolor=COLOR1,
         )
 
         colu = ft.Column(
             controls=[inputSearch],
-            animate_offset=ft.Animation.curve,
+            animate_offset=True,
         )
 
         self.left01 = self.create_container(
@@ -103,8 +102,8 @@ class MyApp:
             100,
             COLOR1,
             GRADIENT,
-            ft.border.only(left=ft.BorderSide(1, "green")),
-            ft.alignment.center_right,
+            ft.Border.only(left=ft.BorderSide(1, "green")),
+            ft.Alignment(1, 0),
         )
 
         self.left02 = self.create_container(
@@ -117,7 +116,7 @@ class MyApp:
             None,
             None,
             COLOR1,
-            alignment=ft.alignment.center,
+            alignment=ft.Alignment(0, 0),
         )
 
         gestureDetector1 = ft.GestureDetector(
@@ -156,7 +155,7 @@ class MyApp:
         page.add(container)
 
     def run(self):
-        ft.app(target=self.main, assets_dir="assets")
+        ft.run(self.main, assets_dir="assets")
 
 if __name__ == "__main__":
     app = MyApp()
